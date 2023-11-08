@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
 
 const MyContext = createContext();
 
@@ -11,6 +12,8 @@ const MyProvider = ({ children }) => {
     () =>
       createTheme({
         palette: {
+          primary: red,
+          secondary: { main: "#ff5252" },
           mode,
         },
       }),

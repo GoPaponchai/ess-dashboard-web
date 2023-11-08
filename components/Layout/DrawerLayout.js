@@ -75,7 +75,6 @@ const DrawerLayout = (props) => {
   const router = useRouter();
   const theme = useTheme();
   const { colorMode, menu, setMenu } = React.useContext(MyContext);
-  console.log("menu", menu);
 
   const onClickMenu = (e) => {
     setMenu(e);

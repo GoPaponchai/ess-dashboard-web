@@ -41,7 +41,7 @@ const AppBarLayout = (props) => {
         >
           <MenuIcon fontSize="medium" />
         </IconButton>
-        <Typography variant="h6" noWrap component="div">
+        <Typography variant="h4" noWrap component="div">
           {t.mainTitle}
         </Typography>
       </Toolbar>
