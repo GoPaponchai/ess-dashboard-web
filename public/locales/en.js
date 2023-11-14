@@ -8,7 +8,8 @@ export default {
   leaveTitle: "Leave",
   year: "Year",
   month: "Month",
-  total_leave: "Total leave",
-  pending_leave: "Pending leave",
-  approve_leave: "Approved leave",
+  total_leave: "Total leave request",
+  pending_leave: "Pending",
+  approve_leave: "Approved",
+  dayAndHour: "Day/Hour",
 };
