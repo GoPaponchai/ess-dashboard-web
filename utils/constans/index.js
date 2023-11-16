@@ -1,3 +1,4 @@
+export const API_URL = "http://localhost:4050";
 export const monthList = [
   { nameTH: "ทั้งหมด", nameEN: "All", key: "0" },
   { nameTH: "มกราคม", nameEN: "January", key: "1" },

@@ -7,16 +7,26 @@ import {
   MenuItem,
   Select,
   Stack,
+  TextField,
+  Autocomplete,
 } from "@mui/material";
-import { DateTime } from "luxon";
 import { useRouter } from "next/router";
+import { fetchEmplist } from "@/middleware/fetcher/master";
+import { LeaveDashboardContext } from "@/context/LeaveDashboardContext";
+import isEmpty from "is-empty";
 
 const SearchYearAndMonth = (props) => {
   const { t } = props;
-  const date = new Date();
+  const {
+    year,
+    setYear,
+    month,
+    setMonth,
+    employee,
+    setEmployee,
+    employeeList,
+  } = React.useContext(LeaveDashboardContext);
   const { locale } = useRouter();
-  const [year, setYear] = React.useState(DateTime.local(date).year);
-  const [month, setMonth] = React.useState("0");
 
   const handleChangeYear = (e) => {
     setYear(e?.target?.value);
@@ -24,6 +34,10 @@ const SearchYearAndMonth = (props) => {
 
   const handleChangeMonth = (e) => {
     setMonth(e?.target?.value);
+  };
+
+  const handleChangeEmployee = (e, newValue) => {
+    setEmployee(newValue ? newValue : null);
   };
 
   return (
@@ -82,6 +96,25 @@ const SearchYearAndMonth = (props) => {
           })}
         </Select>
       </FormControl>
+      <Autocomplete
+        value={employee?.label || null}
+        options={employeeList}
+        renderOption={(props, option) => {
+          return (
+            <li {...props} key={option.emp_id}>
+              {option.label}
+            </li>
+          );
+        }}
+        sx={{ width: 300 }}
+        onChange={handleChangeEmployee}
+        isOptionEqualToValue={(option, value) => {
+          return option.emp_id === value.emp_id;
+        }}
+        renderInput={(params) => (
+          <TextField {...params} label={t.employee} variant="standard" />
+        )}
+      />
     </Stack>
   );
 };

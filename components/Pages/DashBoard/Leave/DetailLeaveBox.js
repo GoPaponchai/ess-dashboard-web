@@ -10,6 +10,7 @@ import {
   CardContent,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import isEmpty from "is-empty";
 
 const Item = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -24,54 +25,69 @@ const Item = styled(Card)(({ theme }) => ({
 }));
 
 const DetailLeaveBox = (props) => {
-  const { title, subTitle, elementID, context, titleValue, day, hour } = props;
-  return (
-    <Item>
-      <CardContent>
-        <Stack spacing={1} justifyContent="">
-          <Stack direction="row" spacing={1}>
-            <Box>
-              <Typography
-                textAlign="left"
-                sx={{ fontSize: "12px" }}
-                variant="body1"
-              >
-                {title}
-              </Typography>
-              <Typography textAlign="left" variant="h5">
-                {new Intl.NumberFormat("th-th", {
-                  maximumSignificantDigits: 10,
-                }).format(titleValue)}
-              </Typography>
-            </Box>
-            <Divider orientation="vertical" flexItem />
-            <Box>
-              <Typography
-                textAlign="left"
-                sx={{ fontSize: "12px" }}
-                variant="body1"
-              >
-                {subTitle}
-              </Typography>
-              <Typography textAlign="center" variant="subtitle2">
-                {new Intl.NumberFormat("th-th", {
-                  maximumSignificantDigits: 10,
-                }).format(day)}
-                {" Day "}
-                {new Intl.NumberFormat("th-th", {
-                  maximumSignificantDigits: 10,
-                }).format(hour)}
-                {" Hour"}
-              </Typography>
-            </Box>
+  const { title, subTitle, elementID, context, chartData } = props;
+
+  if (!isEmpty(chartData.data)) {
+    const hourParse =
+      parseInt(chartData.total_day.toFixed(3).split(".")[1], 10) > 0
+        ? parseInt(chartData.total_day.toFixed(3).split(".")[1], 10) / 125
+        : parseInt(chartData.total_day.toFixed(3).split(".")[1], 10);
+    return (
+      <Item>
+        <CardContent>
+          <Stack spacing={1} justifyContent="">
+            <Stack direction="row" spacing={1}>
+              <Box>
+                <Typography
+                  textAlign="left"
+                  sx={{ fontSize: "12px" }}
+                  variant="body1"
+                >
+                  {title}
+                </Typography>
+                <Typography textAlign="left" variant="h5">
+                  {new Intl.NumberFormat("th-th", {
+                    maximumSignificantDigits: 10,
+                  }).format(chartData.total_req)}
+                </Typography>
+              </Box>
+              <Divider orientation="vertical" flexItem />
+              <Box>
+                <Typography
+                  textAlign="left"
+                  sx={{ fontSize: "12px" }}
+                  variant="body1"
+                >
+                  {subTitle}
+                </Typography>
+                <Typography textAlign="center" variant="subtitle2">
+                  {new Intl.NumberFormat("th-th", {
+                    maximumSignificantDigits: 10,
+                  }).format(Math.floor(chartData.total_day))}
+                  {" Day "}
+                  {new Intl.NumberFormat("th-th", {
+                    maximumSignificantDigits: 10,
+                  }).format(hourParse)}
+                  {" Hour"}
+                </Typography>
+              </Box>
+            </Stack>
           </Stack>
-        </Stack>
-      </CardContent>
-      <div className="relative h-350-px">
-        <ChartLeave elementID={elementID} context={context} />
-      </div>
-    </Item>
-  );
+        </CardContent>
+        <div className="relative h-350-px">
+          <ChartLeave
+            elementID={elementID}
+            context={context}
+            label={chartData.label}
+            data={chartData.data}
+            backgroundColor={chartData.backgroundColor}
+          />
+        </div>
+      </Item>
+    );
+  } else {
+    <div>dowload</div>;
+  }
 };
 
 DetailLeaveBox.defaultProps = {
@@ -87,9 +103,6 @@ DetailLeaveBox.propTypes = {
   subTitle: PropTypes.string,
   elementID: PropTypes.string.isRequired,
   context: PropTypes.string.isRequired,
-  titleValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    .isRequired,
-  day: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  hour: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  chartData: PropTypes.object.isRequired,
 };
 export default DetailLeaveBox;

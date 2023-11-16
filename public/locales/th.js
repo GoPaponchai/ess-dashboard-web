@@ -12,4 +12,5 @@ export default {
   pending_leave: "รออนุมัติ",
   approve_leave: "อนุมัติ",
   dayAndHour: "วัน/ชั่วโมง",
+  employee: "พนักงาน",
 };

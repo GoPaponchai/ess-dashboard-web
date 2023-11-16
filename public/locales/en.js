@@ -12,4 +12,5 @@ export default {
   pending_leave: "Pending",
   approve_leave: "Approved",
   dayAndHour: "Day/Hour",
+  employee: "Employee",
 };

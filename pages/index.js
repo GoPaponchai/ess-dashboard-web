@@ -1,8 +1,8 @@
 import React from "react";
-import { MyContext } from "@/context.js/MiddleContext";
+import { MyContext } from "@/context/MiddleContext";
 import LeaveDashboard from "@/components/Pages/DashBoard/Leave";
 import OvertimeDashboard from "@/components/Pages/DashBoard/Overtime";
-import { Box } from "@mui/material";
+import { LeaveDashboardProvider } from "@/context/LeaveDashboardContext";
 
 const IndexPage = (props) => {
   const { t } = props;
@@ -10,7 +10,9 @@ const IndexPage = (props) => {
 
   return (
     <>
-      {menu === "leave" && <LeaveDashboard t={t} />}
+      <LeaveDashboardProvider>
+        {menu === "leave" && <LeaveDashboard t={t} />}
+      </LeaveDashboardProvider>
       {menu === "ot" && <OvertimeDashboard t={t} />}
     </>
   );

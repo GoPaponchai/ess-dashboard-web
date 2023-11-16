@@ -22,7 +22,7 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import TranslateIcon from "@mui/icons-material/Translate";
 
 import { drawerWidth } from "./constant";
-import { MyContext } from "@/context.js/MiddleContext";
+import { MyContext } from "@/context/MiddleContext";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -74,7 +74,7 @@ const DrawerLayout = (props) => {
   const { open, handleDrawerClose, t, locale } = props;
   const router = useRouter();
   const theme = useTheme();
-  const { colorMode, menu, setMenu } = React.useContext(MyContext);
+  const { colorMode, setMenu } = React.useContext(MyContext);
 
   const onClickMenu = (e) => {
     setMenu(e);

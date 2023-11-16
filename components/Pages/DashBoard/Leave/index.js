@@ -4,10 +4,32 @@ import { Divider, Paper, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import SearchYearAndMonth from "./SearchYearAndMonth";
 import DetailLeaveBox from "./DetailLeaveBox";
+import { fetchEmplist } from "@/middleware/fetcher/master";
+import { LeaveDashboardContext } from "@/context/LeaveDashboardContext";
+import isEmpty from "is-empty";
+import { fetchLeaveDashboard } from "@/middleware/fetcher/dashBoard";
 
 const LeaveDashboard = (props) => {
   const { t } = props;
   const theme = useTheme();
+  const { setEmployeeList, setChartData, employee, year, month, chartData } =
+    React.useContext(LeaveDashboardContext);
+
+  const fetchApi = async () => {
+    const empList = await fetchEmplist();
+    if (!isEmpty(empList?.data)) {
+      setEmployeeList(empList?.data);
+    }
+    const chartDetail = await fetchLeaveDashboard({ employee, year, month });
+    if (!isEmpty(chartDetail?.data)) {
+      setChartData(chartDetail?.data);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchApi();
+    return () => {};
+  }, []);
 
   return (
     <Stack spacing={2}>
@@ -31,9 +53,7 @@ const LeaveDashboard = (props) => {
             subTitle={t.dayAndHour}
             elementID="total-chart-leave"
             context="2d"
-            titleValue="6000"
-            day="6500"
-            hour="18"
+            chartData={chartData.total}
           />
           <DetailLeaveBox
             t={t}
@@ -41,9 +61,7 @@ const LeaveDashboard = (props) => {
             subTitle={t.dayAndHour}
             elementID="approved-chart-leave"
             context="2d"
-            titleValue="5500"
-            day="5500"
-            hour="14"
+            chartData={chartData.approved}
           />
           <DetailLeaveBox
             t={t}
@@ -51,9 +69,7 @@ const LeaveDashboard = (props) => {
             subTitle={t.dayAndHour}
             elementID="pendding-chart-leave"
             context="2d"
-            titleValue="500"
-            day="1000"
-            hour="4"
+            chartData={chartData.pendding}
           />
         </Stack>
       </Paper>
