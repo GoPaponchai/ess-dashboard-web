@@ -11,9 +11,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import { fetchEmplist } from "@/middleware/fetcher/master";
 import { LeaveDashboardContext } from "@/context/LeaveDashboardContext";
-import isEmpty from "is-empty";
 
 const SearchYearAndMonth = (props) => {
   const { t } = props;

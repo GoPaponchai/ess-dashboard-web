@@ -7,7 +7,6 @@ import { LeaveDashboardProvider } from "@/context/LeaveDashboardContext";
 const IndexPage = (props) => {
   const { t } = props;
   const { menu } = React.useContext(MyContext);
-
   return (
     <>
       <LeaveDashboardProvider>

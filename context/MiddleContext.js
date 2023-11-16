@@ -5,7 +5,7 @@ import { red } from "@mui/material/colors";
 const MyContext = createContext();
 
 const MyProvider = ({ children }) => {
-  const [menu, setMenu] = useState("ot");
+  const [menu, setMenu] = useState("leave");
   const [mode, setMode] = React.useState("light");
 
   const theme = React.useMemo(

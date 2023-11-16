@@ -20,7 +20,22 @@ const LeaveDashboard = (props) => {
     if (!isEmpty(empList?.data)) {
       setEmployeeList(empList?.data);
     }
-    const chartDetail = await fetchLeaveDashboard({ employee, year, month });
+    const chartDetail = await fetchLeaveDashboard({
+      emp_id: employee?.emp_id,
+      year,
+      month,
+    });
+    if (!isEmpty(chartDetail?.data)) {
+      setChartData(chartDetail?.data);
+    }
+  };
+
+  const fetchChart = async () => {
+    const chartDetail = await fetchLeaveDashboard({
+      emp_id: employee?.emp_id,
+      year,
+      month,
+    });
     if (!isEmpty(chartDetail?.data)) {
       setChartData(chartDetail?.data);
     }
@@ -28,8 +43,9 @@ const LeaveDashboard = (props) => {
 
   React.useEffect(() => {
     fetchApi();
+    fetchChart();
     return () => {};
-  }, []);
+  }, [employee, year, month]);
 
   return (
     <Stack spacing={2}>

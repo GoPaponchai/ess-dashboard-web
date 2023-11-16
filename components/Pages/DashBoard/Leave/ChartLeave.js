@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Chart } from "chart.js";
 import "chartjs-plugin-labels";
-import isEmpty from "is-empty";
+import { LeaveDashboardContext } from "@/context/LeaveDashboardContext";
 
-function ChartLeave(props) {
+const ChartLeave = (props) => {
   const { elementID, context, label, data, backgroundColor } = props;
+  const { chartData } = React.useContext(LeaveDashboardContext);
 
-  useEffect(() => {
+  React.useEffect(() => {
     var config = {
       type: "doughnut",
       data: {
@@ -41,7 +42,6 @@ function ChartLeave(props) {
         plugins: {
           labels: {
             render: function (args) {
-              console.log("args========", args);
               const value = new Intl.NumberFormat("th-th", {
                 maximumSignificantDigits: 10,
               }).format(args.value);
@@ -56,17 +56,13 @@ function ChartLeave(props) {
       },
     };
 
-    console.log(
-      "Chart.defaults.global.tooltips.callbacks",
-      Chart.defaults.global.tooltips.callbacks.label
-    );
     var ctx = document.getElementById(elementID).getContext(context);
 
     Chart.defaults.global.legend.position = "left";
     window.myLine = new Chart(ctx, config);
-  }, []);
+  }, [chartData]);
   return <canvas id={elementID}></canvas>;
-}
+};
 
 ChartLeave.propTypes = {
   elementID: PropTypes.string.isRequired,

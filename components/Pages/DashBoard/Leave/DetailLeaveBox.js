@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import isEmpty from "is-empty";
+import EmptyChartBox from "./EmptyChartBox";
 
 const Item = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -86,7 +87,7 @@ const DetailLeaveBox = (props) => {
       </Item>
     );
   } else {
-    <div>dowload</div>;
+    return <EmptyChartBox title={title} subTitle={subTitle} />;
   }
 };
 
